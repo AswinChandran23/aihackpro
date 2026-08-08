@@ -1,23 +1,97 @@
-import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import { useEffect, useState } from 'react'
+// import './App.css'
+// import Login from './Login'
+// import Signup from './Signup'
+// import Dashboard from './Dashboard'
+// import AIAssistant from './AIAssistant'
 
-import Login from "./Login";
-import Home from "./home/Home";
+// function App() {
+//   const [path, setPath] = useState(
+//     window.location.pathname === '/' ? '/home' : window.location.pathname,
+//   )
+
+//   useEffect(() => {
+//     const onPopState = () => setPath(window.location.pathname)
+//     window.addEventListener('popstate', onPopState)
+//     return () => window.removeEventListener('popstate', onPopState)
+//   }, [])
+
+//   useEffect(() => {
+//     if (window.location.pathname === '/') {
+//       window.history.replaceState({}, '', '/home')
+//       setPath('/home')
+//     }
+//   }, [])
+
+//   const navigate = (to) => {
+//     if (to === window.location.pathname) return
+//     window.history.pushState({}, '', to)
+//     setPath(to)
+//   }
+
+//   if (path === '/signup') {
+//     return <Signup onNavigate={navigate} />
+//   }
+
+//   if (path === '/ai-assistant') {
+//     return <AIAssistant onNavigate={navigate} />
+//   }
+
+//   if (path === '/home' || path === '/dashboard') {
+//     return <Dashboard onNavigate={navigate} />
+//   }
+
+//   return <Login onNavigate={navigate} />
+// }
+
+// export default App
+import { useEffect, useState } from 'react'
+import './App.css'
+import Login from './Login'
+import Signup from './Signup'
+import Home from './home/Home'
+import AIAssistant from './AIAssistant'
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
+  const [path, setPath] = useState(
+    window.location.pathname === '/' ? '/home' : window.location.pathname,
+  )
 
-        {/* Login Page */}
-        <Route path="/" element={<Login />} />
+  useEffect(() => {
+    const onPopState = () => setPath(window.location.pathname)
 
-        {/* Home Dashboard */}
-        <Route path="/home" element={<Home />} />
+    window.addEventListener('popstate', onPopState)
 
-      </Routes>
-    </BrowserRouter>
-  );
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [])
+
+  useEffect(() => {
+    if (window.location.pathname === '/') {
+      window.history.replaceState({}, '', '/home')
+      setPath('/home')
+    }
+  }, [])
+
+  const navigate = (to) => {
+    if (to === window.location.pathname) return
+
+    window.history.pushState({}, '', to)
+    setPath(to)
+  }
+
+  if (path === '/signup') {
+    return <Signup onNavigate={navigate} />
+  }
+
+  if (path === '/ai-assistant') {
+    return <AIAssistant onNavigate={navigate} />
+  }
+
+  if (path === '/home' || path === '/dashboard') {
+    return <Home onNavigate={navigate} />
+  }
+
+  return <Login onNavigate={navigate} />
 }
 
-export default App;
+export default App
